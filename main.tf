@@ -8,6 +8,13 @@ terraform {
   }
 
   required_version = ">= 1.1.0"
+
+  backend "azurerm" {
+    resource_group_name  = "tfstate-rg"
+    storage_account_name = "tfstatewolter"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+  }
 }
 
 provider "azurerm" {
@@ -22,6 +29,7 @@ resource "azurerm_resource_group" "rg" {
   tags = {
     "Environment" = "Dev"
     "Team" = "DevOps"
+    "ManagedBy"   = "Terraform"
   }
 }
 
