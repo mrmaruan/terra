@@ -21,3 +21,22 @@ variable "web_app_name" {
   description = "Nombre único global de la Web App"
   default     = "myTFWebApp-12345"
 }
+
+variable "key_vault_name" {
+  type        = string
+  description = "Nombre único global del Key Vault"
+  default     = "myTFKeyVault-12345"
+}
+
+variable "secret_value" {
+  type        = string
+  description = "Valor del secreto de ejemplo"
+  sensitive   = true
+  default     = "mi-secreto-super-seguro"
+}
+
+variable "object_id" {
+  type        = string
+  description = "Object ID del usuario con acceso al Key Vault"
+  default     = "9e5007bf-ac56-4176-be89-658650c8beef"
+}

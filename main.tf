@@ -17,7 +17,11 @@ terraform {
 }
 
 provider "azurerm" {
-  features {}
+  features {
+    resource_group {
+      prevent_deletion_if_contains_resources = false
+    }
+  }
 }
 
 resource "azurerm_resource_group" "rg" {
@@ -34,6 +38,7 @@ resource "azurerm_resource_group" "rg" {
 module "networking" {
   source              = "./modules/networking"
   vnet_name           = "myTFVnet"
+  subnet_name         = "Subnet1"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 }
@@ -54,4 +59,13 @@ module "monitoring" {
   resource_group_name = azurerm_resource_group.rg.name
   service_plan_id     = module.webapp.service_plan_id
   web_app_id          = module.webapp.web_app_id
+}
+
+module "keyvault" {
+  source              = "./modules/keyvault"
+  key_vault_name      = var.key_vault_name
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  secret_value        = var.secret_value
+  object_id           = var.object_id
 }

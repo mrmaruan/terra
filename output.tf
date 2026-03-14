@@ -13,3 +13,8 @@ output "web_app_name" {
 output "log_analytics_workspace_id" {
   value = module.monitoring.log_analytics_workspace_id
 }
+
+output "key_vault_uri" {
+  value       = module.keyvault.key_vault_uri
+  description = "URI del Key Vault"
+}
